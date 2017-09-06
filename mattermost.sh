@@ -23,7 +23,8 @@ fi
 
 # The message that we want to send to Mattermost  is the "subject" value ($2 / $subject - that we got earlier)
 #  followed by the message that Zabbix actually sent us ($3)
-message="${subject}: $3"
+zabbix_msg="${3//$'\r'/\\r}"
+message="${subject}: $zabbix_msg"
 
 # Build our JSON payload and send it as a POST request to the Mattermost incoming web-hook URL
 payload="payload={\"icon_url\": \"$icon\", \"attachments\": [ {\"color\": \"${color}\", \"text\": \"${message}\"} ], \"channel\": \"${to}\", \"username\": \"${username}\", \"icon_emoji\": \"${emoji}\"}"
